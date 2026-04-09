@@ -1,7 +1,6 @@
 document.getElementById("contactForm").addEventListener("submit", function (e) {
     e.preventDefault();
 
-    let form = this;
     let name = document.getElementById("name");
     let email = document.getElementById("email");
     let message = document.getElementById("message");
@@ -9,19 +8,18 @@ document.getElementById("contactForm").addEventListener("submit", function (e) {
 
     let valid = true;
 
-    // Clear previous errors
+    // Clear errors
     document.getElementById("nameError").textContent = "";
     document.getElementById("emailError").textContent = "";
     document.getElementById("messageError").textContent = "";
     success.textContent = "";
 
-    // Name validation
+    // Validation
     if (name.value.trim() === "") {
         document.getElementById("nameError").textContent = "Name is required.";
         valid = false;
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email.value.trim() === "") {
         document.getElementById("emailError").textContent = "Email is required.";
@@ -31,25 +29,26 @@ document.getElementById("contactForm").addEventListener("submit", function (e) {
         valid = false;
     }
 
-    // Message validation
     if (message.value.trim() === "") {
         document.getElementById("messageError").textContent = "Message is required.";
         valid = false;
     }
 
-    // ✅ If valid → send email
+    // ✅ If valid → open email app
     if (valid) {
 
-        success.textContent = "⏳ Sending...";
+        let toEmail = "sethu123go@gmail.com"; // 🔴 change if needed
 
-        emailjs.sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", form)
-            .then(function () {
-                success.textContent = "✅ Message sent successfully!";
-                form.reset();
-            })
-            .catch(function (error) {
-                success.textContent = "❌ Failed to send message!";
-                console.error("EmailJS Error:", error);
-            });
+        let subject = encodeURIComponent("Contact from " + name.value);
+        let body = encodeURIComponent(
+            "Name: " + name.value + "\n" +
+            "Email: " + email.value + "\n\n" +
+            "Message:\n" + message.value
+        );
+
+        // Open mail app
+        window.location.href = `mailto:${toEmail}?subject=${subject}&body=${body}`;
+
+        success.textContent = "📧 Opening your email app...";
     }
 });
