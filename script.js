@@ -37,7 +37,7 @@ document.getElementById("contactForm").addEventListener("submit", function (e) {
     // ✅ If valid → open email app
     if (valid) {
 
-        let toEmail = "sethu123go@gmail.com"; // 🔴 change if needed
+        let toEmail = "sm6579164@gmail.com"; // 🔴 change if needed
 
         let subject = encodeURIComponent("Contact from " + name.value);
         let body = encodeURIComponent(
