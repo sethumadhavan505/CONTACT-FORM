@@ -1,54 +1,37 @@
-document.getElementById("contactForm").addEventListener("submit", function (e) {
+// EmailJS Public Key
+emailjs.init("6ou6FUbff378jGxUO");
+
+// Form Submit
+document
+  .getElementById("contact-form")
+  .addEventListener("submit", function (e) {
+
     e.preventDefault();
 
-    let name = document.getElementById("name");
-    let email = document.getElementById("email");
-    let message = document.getElementById("message");
-    let success = document.getElementById("formSuccess");
+    const templateParams = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      message: document.getElementById("message").value
+    };
 
-    let valid = true;
+    emailjs.send(
+      "service_dwgvnk8",
+      "template_5ce385u",
+      templateParams
+    )
+    .then(function () {
 
-    // Clear errors
-    document.getElementById("nameError").textContent = "";
-    document.getElementById("emailError").textContent = "";
-    document.getElementById("messageError").textContent = "";
-    success.textContent = "";
+      alert("Message Sent Successfully!");
 
-    // Validation
-    if (name.value.trim() === "") {
-        document.getElementById("nameError").textContent = "Name is required.";
-        valid = false;
-    }
+      document.getElementById("contact-form").reset();
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (email.value.trim() === "") {
-        document.getElementById("emailError").textContent = "Email is required.";
-        valid = false;
-    } else if (!emailRegex.test(email.value.trim())) {
-        document.getElementById("emailError").textContent = "Enter a valid email.";
-        valid = false;
-    }
+    })
+    .catch(function (error) {
 
-    if (message.value.trim() === "") {
-        document.getElementById("messageError").textContent = "Message is required.";
-        valid = false;
-    }
+      console.log(error);
 
-    // ✅ If valid → open email app
-    if (valid) {
+      alert("Failed To Send Message!");
 
-        let toEmail = "sm6579164@gmail.com"; // 🔴 change if needed
+    });
 
-        let subject = encodeURIComponent("Contact from " + name.value);
-        let body = encodeURIComponent(
-            "Name: " + name.value + "\n" +
-            "Email: " + email.value + "\n\n" +
-            "Message:\n" + message.value
-        );
-
-        // Open mail app
-        window.location.href = `mailto:${toEmail}?subject=${subject}&body=${body}`;
-
-        success.textContent = "📧 Opening your email app...";
-    }
 });
