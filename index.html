@@ -1,69 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Form</title>
-    <link rel="stylesheet" href="style.css" />
 
-    <!-- EmailJS -->
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-    <script>
-        (function () {
-            emailjs.init("YOUR_PUBLIC_KEY"); // 🔴 replace
-        })();
-    </script>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
-
 <body>
-    <div class="form-container">
-        <h2>Contact Form</h2>
 
-        <form id="contactForm" novalidate>
+    <div class="container">
+        <form id="contact-form">
+            <h1>Contact Form</h1>
 
-            <div class="formgroup">
-                <label for="name" style="color:white">Name:</label>
-                <input type="text" id="name" name="name" required />
-                <small class="error" id="nameError"></small>
-            </div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
 
-            <div class="formgroup">
-                <label for="email" style="color:white">Email:</label>
-                <input type="email" id="email" name="email" required />
-                <small class="error" id="emailError"></small>
-            </div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
 
-            <div class="formgroup">
-                <label for="message" style="color:white">Message:</label>
-                <textarea id="message" name="message" rows="1" required></textarea>
-                <small class="error" id="messageError"></small>
-            </div>
+            <label for="message">Message:</label>
+            <textarea id="message" rows="5" required></textarea>
 
-            <button type="submit" style="color:white">Send</button>
-            <p id="formSuccess" class="success"></p>
-
+            <button type="submit">Send</button>
         </form>
     </div>
 
     <script src="script.js"></script>
 
-    <!-- Email Send Script -->
-    <script>
-        document.getElementById("contactForm").addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            emailjs.sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", this)
-                .then(() => {
-                    document.getElementById("formSuccess").innerText = "✅ Email sent successfully!";
-                    this.reset();
-                }, (error) => {
-                    document.getElementById("formSuccess").innerText = "❌ Failed to send email";
-                    console.log(error);
-                });
-        });
-    </script>
-
 </body>
-
 </html>
