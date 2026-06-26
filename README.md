@@ -36,7 +36,7 @@ CONTACT-FORM/
 │── index.html
 │── style.css
 │── script.js
-│── 
+│── Background.png
 │── README.md
 ```
 
