@@ -70,8 +70,7 @@ The website is optimized for:
 ---
 
 ## 📸 Preview
-<img width="1807" height="906" alt="image" src="https://github.com/user-attachments/assets/19c51106-f1b9-48c3-be7c-4abc58a9b2af" />
-
+<img width="1801" height="911" alt="image" src="https://github.com/user-attachments/assets/440f142c-3789-4df0-bd5c-069b8eb8cf29" />
 
 ## 🔮 Future Improvements
 
