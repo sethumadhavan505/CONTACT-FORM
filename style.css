@@ -10,15 +10,18 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:#6d6988;
+
+    background:url('Background.png') no-repeat center center fixed;
+    background-size:cover;
 }
 
 .container{
     width:500px;
-    background:#111;
+    background:rgba(17,17,17,0.9);
     padding:35px;
     border-radius:18px;
     box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    backdrop-filter:blur(5px);
 }
 
 h1{
