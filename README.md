@@ -7,7 +7,6 @@ A modern, responsive Contact Form built using **HTML, CSS, and JavaScript** with
 https://sethumadhavan505.github.io/CONTACT-FORM/
 
 ---
-
 ## ✨ Features
 
 - ✅ Responsive design for all devices
@@ -19,7 +18,6 @@ https://sethumadhavan505.github.io/CONTACT-FORM/
 - ✅ Lightweight and fast
 
 ---
-
 ## 🛠️ Technologies Used
 
 - HTML5
@@ -39,9 +37,7 @@ CONTACT-FORM/
 │── Background.png
 │── README.md
 ```
-
 ---
-
 ## 🚀 Getting Started
 
 ### Clone the repository
@@ -74,16 +70,8 @@ The website is optimized for:
 ---
 
 ## 📸 Preview
+<img width="1807" height="906" alt="image" src="https://github.com/user-attachments/assets/19c51106-f1b9-48c3-be7c-4abc58a9b2af" />
 
-> Add screenshots of your contact form here.
-
-Example:
-
-```
-images/contact-form-preview.png
-```
-
----
 
 ## 🔮 Future Improvements
 
