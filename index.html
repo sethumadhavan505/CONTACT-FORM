@@ -21,15 +21,46 @@
 
             <h1>Contact Form</h1>
 
+            <!-- Name -->
             <label for="name">Name:</label>
-            <input type="text" id="name" required>
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter your name"
+                required
+            >
 
+            <!-- Email -->
             <label for="email">Email:</label>
-            <input type="email" id="email" required>
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+            >
 
+            <!-- Mobile Number -->
+            <label for="mobile">Mobile No:</label>
+            <input
+                type="tel"
+                id="mobile"
+                placeholder="Enter your mobile number"
+                maxlength="10"
+                pattern="[0-9]{10}"
+                inputmode="numeric"
+                required
+            >
+
+            <!-- Message -->
             <label for="message">Message:</label>
-            <textarea id="message" rows="5" required></textarea>
+            <textarea
+                id="message"
+                rows="5"
+                placeholder="Enter your message"
+                required
+            ></textarea>
 
+            <!-- Buttons -->
             <div class="button-group">
 
                 <button
@@ -39,7 +70,6 @@
                     Back
                 </button>
 
-                <!-- Send Button -->
                 <button
                     type="submit"
                     class="send-btn"
