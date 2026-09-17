@@ -84,3 +84,189 @@ textarea{
 .send-btn:hover{
     background:#45a049;
 }
+
+
+/* =================================
+   SEND BUTTON DISABLED
+================================= */
+
+.send-btn:disabled{
+    opacity:0.7;
+    cursor:not-allowed;
+}
+
+.send-btn:disabled:hover{
+    background:#4CAF50;
+}
+
+
+/* =================================
+   SUCCESS POPUP
+================================= */
+
+.success-overlay{
+    position:fixed;
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:rgba(0,0,0,0.55);
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:opacity 0.3s ease,
+               visibility 0.3s ease;
+
+    z-index:99999;
+}
+
+
+/* Popup visible */
+
+.success-overlay.show{
+    opacity:1;
+    visibility:visible;
+}
+
+
+/* =================================
+   SUCCESS BOX
+================================= */
+
+.success-box{
+    width:360px;
+    max-width:90%;
+
+    padding:30px 25px;
+
+    background:#ffffff;
+
+    border-radius:16px;
+
+    text-align:center;
+
+    box-shadow:0 20px 60px rgba(0,0,0,0.35);
+
+    transform:scale(0.8);
+
+    transition:transform 0.3s ease;
+}
+
+
+/* Popup animation */
+
+.success-overlay.show .success-box{
+    transform:scale(1);
+}
+
+
+/* =================================
+   SUCCESS ICON
+================================= */
+
+.success-icon{
+    width:60px;
+    height:60px;
+
+    margin:0 auto 15px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#4CAF50;
+
+    color:white;
+
+    border-radius:50%;
+
+    font-size:32px;
+    font-weight:bold;
+}
+
+
+/* =================================
+   SUCCESS TITLE
+================================= */
+
+.success-box h2{
+    margin:10px 0;
+
+    color:#222;
+
+    font-size:22px;
+}
+
+
+/* =================================
+   SUCCESS MESSAGE
+================================= */
+
+.success-box p{
+    margin:10px 0 22px;
+
+    color:#666;
+
+    font-size:14px;
+
+    line-height:1.5;
+}
+
+
+/* =================================
+   SUBMIT AGAIN BUTTON
+================================= */
+
+#submitAgainBtn{
+    width:100%;
+
+    padding:12px 20px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#4CAF50;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.2s ease;
+}
+
+#submitAgainBtn:hover{
+    background:#45a049;
+
+    transform:translateY(-1px);
+}
+
+
+/* =================================
+   MOBILE RESPONSIVE
+================================= */
+
+@media (max-width:600px){
+
+    .container{
+        width:90%;
+        padding:25px;
+    }
+
+    h1{
+        font-size:24px;
+    }
+
+    .success-box{
+        width:90%;
+        padding:25px 20px;
+    }
+
+}
