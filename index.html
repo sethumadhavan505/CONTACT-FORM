@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Contact Form</title>
+
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 
+    <!-- EmailJS -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
+
 <body>
 
     <div class="container">
+
         <form id="contact-form">
+
             <h1>Contact Form</h1>
 
             <label for="name">Name:</label>
@@ -25,6 +31,7 @@
             <textarea id="message" rows="5" required></textarea>
 
             <div class="button-group">
+
                 <button
                     type="button"
                     class="back-btn"
@@ -32,14 +39,50 @@
                     Back
                 </button>
 
-                <button type="submit" class="send-btn">
+                <!-- Send Button -->
+                <button
+                    type="submit"
+                    class="send-btn"
+                    id="sendBtn">
                     Send
                 </button>
+
             </div>
 
         </form>
+
     </div>
 
+
+    <!-- =========================
+         SUCCESS POPUP
+    ========================== -->
+
+    <div class="success-overlay" id="successPopup">
+
+        <div class="success-box">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2>Message Sent Successfully 🎉</h2>
+
+            <p>
+                Your message has been sent successfully.
+                ODRS TEAM will contact you soon.
+            </p>
+
+            <button id="submitAgainBtn">
+                Submit Again
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript -->
     <script src="script.js"></script>
 
 </body>
