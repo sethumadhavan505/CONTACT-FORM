@@ -31,11 +31,13 @@ document
         // Get form values
         const templateParams = {
 
-            name: document.getElementById("name").value,
+            name: document.getElementById("name").value.trim(),
+            
+            email: document.getElementById("email").value.trim(),
 
-            email: document.getElementById("email").value,
+            mobile: document.getElementById("mobile").value.trim(),
 
-            message: document.getElementById("message").value
+            message: document.getElementById("message").value.trim()
 
         };
 
