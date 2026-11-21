@@ -19,11 +19,10 @@
             <!-- Google Account verification -->
             <div class="google-account">
                 <label>Google Account</label>
-                <button type="button" id="googleBtn" class="google-btn">
-                    <span class="google-mark" aria-hidden="true">G</span>
+                <button type="button" id="googleBtn" class="google-btn" onclick="googleLogin()">
                     Sign in with Google
                 </button>
-                <input type="email" id="email" placeholder="Sign in with Google first" readonly required>
+                <input type="text" id="email" placeholder="Sign in with Google first" readonly required>
                 <small id="loginStatus" class="login-status" role="status" aria-live="polite"></small>
             </div>
 
@@ -54,12 +53,7 @@
     <!-- Firebase Google Authentication -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import {
-            getAuth,
-            GoogleAuthProvider,
-            signInWithPopup,
-            onAuthStateChanged
-        } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
         // Uses the same Firebase project configured in ODRS-BOOKING-PAGE.
         const firebaseConfig = {
@@ -75,46 +69,32 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
-        provider.setCustomParameters({ prompt: "select_account" });
 
         const nameInput = document.getElementById("name");
         const emailInput = document.getElementById("email");
         const loginStatus = document.getElementById("loginStatus");
         const googleBtn = document.getElementById("googleBtn");
 
-        function showSignedInUser(user) {
-            if (!user) return;
-            nameInput.value = user.displayName || "";
-            emailInput.value = user.email || "";
-            loginStatus.textContent = "✓ Google Account Verified";
-            loginStatus.classList.add("verified");
-            googleBtn.textContent = "Google Account Connected";
-            googleBtn.classList.add("connected");
-            googleBtn.hidden = true; // Hide the sign-in button after successful authentication.
-        }
+        // Match ODRS behavior: start signed out every time the page is loaded.
+        signOut(auth).catch((error) => {
+            console.error("Could not reset previous Google session:", error);
+        });
 
-        googleBtn.addEventListener("click", async () => {
+        window.googleLogin = async function () {
             googleBtn.disabled = true;
-            loginStatus.textContent = "Opening Google sign-in...";
-            loginStatus.classList.remove("verified");
-
             try {
                 const result = await signInWithPopup(auth, provider);
-                showSignedInUser(result.user);
+                const user = result.user;
+                nameInput.value = (user.displayName || "").toUpperCase();
+                emailInput.value = user.email || "";
+                loginStatus.textContent = "✅ Google Account Verified";
             } catch (error) {
                 console.error("Google sign-in failed:", error);
-                loginStatus.textContent =
-                    error.code === "auth/popup-closed-by-user"
-                        ? "Sign-in was cancelled. Please try again."
-                        : "Google sign-in failed. Please try again.";
+                alert(error.message || "Google sign-in failed. Please try again.");
             } finally {
                 googleBtn.disabled = false;
             }
-        });
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) showSignedInUser(user);
-        });
+        };
     </script>
 
     <script src="script.js"></script>
