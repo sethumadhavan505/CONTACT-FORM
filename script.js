@@ -48,6 +48,7 @@ form.addEventListener("submit", async function (e) {
         );
 
         form.reset();
+        document.getElementById("loginStatus").textContent = "";
         sendBtn.textContent = "Sent ✓";
         document.getElementById("successPopup").classList.add("show");
     } catch (error) {
