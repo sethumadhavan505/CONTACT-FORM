@@ -3,117 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Contact Form</title>
-
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-
-    <!-- EmailJS -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
-
 <body>
-
     <div class="container">
-
         <form id="contact-form">
-
             <h1>Contact Form</h1>
 
-            <!-- Name -->
             <label for="name">Name:</label>
-            <input
-                type="text"
-                id="name"
-                placeholder="Enter your name"
-                required
-            >
+            <input type="text" id="name" placeholder="Enter your name" required>
 
-            <!-- Email -->
-            <label for="email">Email:</label>
-            <input
-                type="email"
-                id="email"
-                placeholder="Enter your email"
-                required
-            >
-
-            <!-- Mobile Number -->
-            <label for="mobile">Mobile No:</label>
-            <input
-                type="tel"
-                id="mobile"
-                placeholder="Enter your mobile number"
-                maxlength="10"
-                pattern="[0-9]{10}"
-                inputmode="numeric"
-                required
-            >
-
-            <!-- Message -->
-            <label for="message">Message:</label>
-            <textarea
-                id="message"
-                rows="5"
-                placeholder="Enter your message"
-                required
-            ></textarea>
-
-            <!-- Buttons -->
-            <div class="button-group">
-
-                <button
-                    type="button"
-                    class="back-btn"
-                    onclick="window.location.href='https://odrs-company-io.vercel.app/'">
-                    Back
+            <!-- Google Account verification -->
+            <div class="google-account">
+                <label>Google Account</label>
+                <button type="button" id="googleBtn" class="google-btn">
+                    <span class="google-mark" aria-hidden="true">G</span>
+                    Sign in with Google
                 </button>
-
-                <button
-                    type="submit"
-                    class="send-btn"
-                    id="sendBtn">
-                    Send
-                </button>
-
+                <input type="email" id="email" placeholder="Sign in with Google first" readonly required>
+                <small id="loginStatus" class="login-status" role="status" aria-live="polite"></small>
             </div>
 
+            <label for="mobile">Mobile No:</label>
+            <input type="tel" id="mobile" placeholder="Enter your mobile number"
+                   maxlength="10" pattern="[0-9]{10}" inputmode="numeric" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" rows="5" placeholder="Enter your message" required></textarea>
+
+            <div class="button-group">
+                <button type="button" class="back-btn"
+                    onclick="window.location.href='https://odrs-company-io.vercel.app/'">Back</button>
+                <button type="submit" class="send-btn" id="sendBtn">Send</button>
+            </div>
         </form>
-
     </div>
-
-
-    <!-- =========================
-         SUCCESS POPUP
-    ========================== -->
 
     <div class="success-overlay" id="successPopup">
-
         <div class="success-box">
-
-            <div class="success-icon">
-                ✓
-            </div>
-
+            <div class="success-icon">✓</div>
             <h2>Message Sent Successfully 🎉</h2>
-
-            <p>
-                Your message has been sent successfully.
-                ODRS TEAM will contact you soon.
-            </p>
-
-            <button type="button" id="submitAgainBtn">
-                Submit Again
-            </button>
-
+            <p>Your message has been sent successfully. ODRS TEAM will contact you soon.</p>
+            <button type="button" id="submitAgainBtn">Submit Again</button>
         </div>
-
     </div>
 
+    <!-- Firebase Google Authentication -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import {
+            getAuth,
+            GoogleAuthProvider,
+            signInWithPopup,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-    <!-- JavaScript -->
+        // Uses the same Firebase project configured in ODRS-BOOKING-PAGE.
+        const firebaseConfig = {
+            apiKey: "AIzaSyA_ZYwA2il9pZLsgSnY09VQg3PLeZsQfn8",
+            authDomain: "odrs-booking.firebaseapp.com",
+            projectId: "odrs-booking",
+            storageBucket: "odrs-booking.firebasestorage.app",
+            messagingSenderId: "1118712128480",
+            appId: "1:118712128480:web:307465bf5d52b15bcc5185",
+            measurementId: "G-5W22RXPE2S"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: "select_account" });
+
+        const nameInput = document.getElementById("name");
+        const emailInput = document.getElementById("email");
+        const loginStatus = document.getElementById("loginStatus");
+        const googleBtn = document.getElementById("googleBtn");
+
+        function showSignedInUser(user) {
+            if (!user) return;
+            nameInput.value = user.displayName || "";
+            emailInput.value = user.email || "";
+            loginStatus.textContent = "✓ Google Account Verified";
+            loginStatus.classList.add("verified");
+            googleBtn.textContent = "Google Account Connected";
+            googleBtn.classList.add("connected");
+        }
+
+        googleBtn.addEventListener("click", async () => {
+            googleBtn.disabled = true;
+            loginStatus.textContent = "Opening Google sign-in...";
+            loginStatus.classList.remove("verified");
+
+            try {
+                const result = await signInWithPopup(auth, provider);
+                showSignedInUser(result.user);
+            } catch (error) {
+                console.error("Google sign-in failed:", error);
+                loginStatus.textContent =
+                    error.code === "auth/popup-closed-by-user"
+                        ? "Sign-in was cancelled. Please try again."
+                        : "Google sign-in failed. Please try again.";
+            } finally {
+                googleBtn.disabled = false;
+            }
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) showSignedInUser(user);
+        });
+    </script>
+
     <script src="script.js"></script>
-
 </body>
 </html>
