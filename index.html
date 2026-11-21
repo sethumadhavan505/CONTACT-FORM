@@ -90,6 +90,7 @@
             loginStatus.classList.add("verified");
             googleBtn.textContent = "Google Account Connected";
             googleBtn.classList.add("connected");
+            googleBtn.hidden = true; // Hide the sign-in button after successful authentication.
         }
 
         googleBtn.addEventListener("click", async () => {
