@@ -1,100 +1,64 @@
-// ===============================
 // EmailJS Public Key
-// ===============================
-
 emailjs.init("6ou6FUbff378jGxUO");
 
+const form = document.getElementById("contact-form");
+const sendBtn = document.getElementById("sendBtn");
+const emailInput = document.getElementById("email");
 
-// ===============================
-// Form Submit
-// ===============================
+// Submit contact form
+form.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-document
-    .getElementById("contact-form")
-    .addEventListener("submit", function (e) {
+    if (sendBtn.disabled) return;
 
-        e.preventDefault();
+    // A Google account must be selected before the form can be sent.
+    const email = emailInput.value.trim();
+    if (!email) {
+        alert("Please sign in with Google first.");
+        document.getElementById("googleBtn").focus();
+        return;
+    }
 
-        const form = document.getElementById("contact-form");
-        const sendBtn = document.getElementById("sendBtn");
+    if (!email.endsWith("@gmail.com")) {
+        alert("Please use a Gmail account.");
+        return;
+    }
 
-        // Prevent multiple clicks
-        if (sendBtn.disabled) {
-            return;
-        }
+    const mobile = document.getElementById("mobile").value.trim();
+    if (!/^[0-9]{10}$/.test(mobile)) {
+        alert("Please enter a valid 10-digit mobile number.");
+        return;
+    }
 
-        // Disable Send button immediately
-        sendBtn.disabled = true;
-        sendBtn.textContent = "Sending...";
+    const templateParams = {
+        name: document.getElementById("name").value.trim(),
+        email,
+        mobile,
+        message: document.getElementById("message").value.trim()
+    };
 
+    sendBtn.disabled = true;
+    sendBtn.textContent = "Sending...";
 
-        // Get form values
-        const templateParams = {
-
-            name: document.getElementById("name").value.trim(),
-            
-            email: document.getElementById("email").value.trim(),
-
-            mobile: document.getElementById("mobile").value.trim(),
-
-            message: document.getElementById("message").value.trim()
-
-        };
-
-
-        // ===============================
-        // Send Email
-        // ===============================
-
-        emailjs.send(
+    try {
+        await emailjs.send(
             "service_dwgvnk8",
             "template_5ce385u",
             templateParams
-        )
+        );
 
-        .then(function () {
+        form.reset();
+        sendBtn.textContent = "Sent ✓";
+        document.getElementById("successPopup").classList.add("show");
+    } catch (error) {
+        console.error("EmailJS Error:", error);
+        sendBtn.disabled = false;
+        sendBtn.textContent = "Send";
+        alert("Failed to send message. Please try again.");
+    }
+});
 
-            console.log("Message sent successfully!");
-
-            // Clear form
-            form.reset();
-
-            // Change Send button
-            sendBtn.textContent = "Sent ✓";
-
-
-            // Show success popup
-            document
-                .getElementById("successPopup")
-                .classList.add("show");
-
-        })
-
-        .catch(function (error) {
-
-            console.log("EmailJS Error:", error);
-
-            // Enable Send button again
-            sendBtn.disabled = false;
-
-            sendBtn.textContent = "Send";
-
-            alert("Failed To Send Message!");
-
-        });
-
-    });
-
-
-// ===============================
 // Submit Again
-// ===============================
-
-document
-    .getElementById("submitAgainBtn")
-    .addEventListener("click", function () {
-
-        window.location.href =
-            "https://odrs-contact-form.vercel.app/";
-
-    });
+document.getElementById("submitAgainBtn").addEventListener("click", function () {
+    window.location.href = "https://odrs-contact-form.vercel.app/";
+});
