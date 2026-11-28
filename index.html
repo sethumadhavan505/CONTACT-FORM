@@ -16,15 +16,8 @@
             <label for="name">Name:</label>
             <input type="text" id="name" placeholder="Enter your name" required>
 
-            <!-- Google Account verification -->
-            <div class="google-account">
-                <label>Google Account</label>
-                <button type="button" id="googleBtn" class="google-btn" onclick="googleLogin()">
-                    Sign in with Google
-                </button>
-                <input type="text" id="email" placeholder="Sign in with Google first" readonly required>
-                <small id="loginStatus" class="login-status" role="status" aria-live="polite"></small>
-            </div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter your email address" autocomplete="email" required>
 
             <label for="mobile">Mobile No:</label>
             <input type="tel" id="mobile" placeholder="Enter your mobile number"
@@ -49,53 +42,6 @@
             <button type="button" id="submitAgainBtn">Submit Again</button>
         </div>
     </div>
-
-    <!-- Firebase Google Authentication -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-
-        // Uses the same Firebase project configured in ODRS-BOOKING-PAGE.
-        const firebaseConfig = {
-            apiKey: "AIzaSyArNYu_tz4cWdRj-Y9-fuQ6gL3ODJekLcY",
-            authDomain: "ords-contact-form.firebaseapp.com",
-            projectId: "ords-contact-form",
-            storageBucket: "ords-contact-form.firebasestorage.app",
-            messagingSenderId: "997744686986",
-            appId: "1:997744686986:web:77069561083c1493d6ba73",
-            measurementId: "G-8GM2LPNENX"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-
-        const nameInput = document.getElementById("name");
-        const emailInput = document.getElementById("email");
-        const loginStatus = document.getElementById("loginStatus");
-        const googleBtn = document.getElementById("googleBtn");
-
-        // Match ODRS behavior: start signed out every time the page is loaded.
-        signOut(auth).catch((error) => {
-            console.error("Could not reset previous Google session:", error);
-        });
-
-        window.googleLogin = async function () {
-            googleBtn.disabled = true;
-            try {
-                const result = await signInWithPopup(auth, provider);
-                const user = result.user;
-                nameInput.value = (user.displayName || "").toUpperCase();
-                emailInput.value = user.email || "";
-                loginStatus.textContent = "✅ Google Account Verified";
-            } catch (error) {
-                console.error("Google sign-in failed:", error);
-                alert(error.message || "Google sign-in failed. Please try again.");
-            } finally {
-                googleBtn.disabled = false;
-            }
-        };
-    </script>
 
     <script src="script.js"></script>
 </body>
