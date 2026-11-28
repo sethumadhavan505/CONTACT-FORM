@@ -3,7 +3,6 @@ emailjs.init("6ou6FUbff378jGxUO");
 
 const form = document.getElementById("contact-form");
 const sendBtn = document.getElementById("sendBtn");
-const emailInput = document.getElementById("email");
 
 // Submit contact form
 form.addEventListener("submit", async function (e) {
@@ -11,16 +10,16 @@ form.addEventListener("submit", async function (e) {
 
     if (sendBtn.disabled) return;
 
-    // A Google account must be selected before the form can be sent.
-    const email = emailInput.value.trim();
+    const email = document.getElementById("email").value.trim();
     if (!email) {
-        alert("Please sign in with Google first.");
-        document.getElementById("googleBtn").focus();
+        alert("Please enter your email address.");
+        document.getElementById("email").focus();
         return;
     }
 
-    if (!email.endsWith("@gmail.com")) {
-        alert("Please use a Gmail account.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert("Please enter a valid email address.");
+        document.getElementById("email").focus();
         return;
     }
 
@@ -48,7 +47,6 @@ form.addEventListener("submit", async function (e) {
         );
 
         form.reset();
-        document.getElementById("loginStatus").textContent = "";
         sendBtn.textContent = "Sent ✓";
         document.getElementById("successPopup").classList.add("show");
     } catch (error) {
